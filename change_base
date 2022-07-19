@@ -1,0 +1,10 @@
+def change_base(num, base):
+    if num == 0:
+        return [0]
+        
+    digits = []
+    while n:
+        digits.append(num % base)
+        num //= base
+        
+    return digits[::-1]
