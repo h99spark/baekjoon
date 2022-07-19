@@ -1,3 +1,4 @@
+#base < 10
 def change_base(num, base):
     if num == 0:
         return [0]
@@ -8,3 +9,17 @@ def change_base(num, base):
         num //= base
         
     return digits[::-1]
+
+#general case
+
+import string
+
+tmp = string.digits + string.ascii_lowercase
+def convert(num, base) :
+    q, r = divmod(num, base)
+    if q == 0:
+        return tmp[r] 
+    else:
+        return convert(q, base) + tmp[r]
+
+print(convert(23, 12))
