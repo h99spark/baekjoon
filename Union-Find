@@ -3,32 +3,38 @@ def find(x):
     # 루트 노드가 아니라면, 루트 노드를 찾을 때까지 재귀적으로 호출
     if parent[x] != x:
         return find(parent[x])
-    return x
+    else:
+        return x
     
     
-# 특정 원소가 속한 집합을 찾기
+# path compression
 def find_parent(x):
     # 루트 노드가 아니라면, 루트 노드를 찾을 때까지 재귀적으로 호출
     if parent[x] != x:
         parent[x] = find_parent(parent[x])
-    return parent[x]
+    else:
+        return parent[x]
 
 
 # 두 원소가 속한 집합을 합치기
 def union(a, b):
-    a = find(a)
-    b = find(b)
-    if a < b:
-        parent[b] = a
+    root_a = find(a)
+    root_b = find(b)
+    
+    if root_a < root_b:
+        parent[root_b] = root_a
     else:
-        parent[a] = b
+        parent[root_a] = root_b
+        
         
 # rank 고려해 집합 합치기
 def union(a, b):
     a = find(a)
     b = find(b)
     
-    if a != b:
+    if a == b:
+        return
+    else:
         if rank[a] > rank[b]:
             parent[b] = a
         elif rank[a] < rank[b]:
