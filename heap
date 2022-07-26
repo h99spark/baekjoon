@@ -1,0 +1,43 @@
+class MaxHeap:
+
+    def __init__(self):
+        self.data = [None]
+
+    def insert(self, item):
+        self.data.append(item)
+
+        i = len(self.data) - 1
+        # when child is greater than its parent
+        while i > 0:
+            parent = (i - 1) // 2
+            if self.data[i] > self.data[parent]:
+                self.data[i], self.data[parent] = self.data[parent], self.data[i]
+                i = (i - 1) // 2
+            else:
+                break
+
+    def remove(self):
+        if len(self.data) > 1:
+            self.data[1], self.data[-1] = self.data[-1], self.data[1]
+            data = self.data.pop()
+            self.maxHeapify(0)
+        else:
+            data = None
+
+        return data
+
+    def maxHeapify(self, i):
+        left = 2 * i + 1
+        right = 2 * i + 2
+        largest = i
+
+        if left < len(self.data) and self.data[i] < self.data[left]:
+            largest = left
+
+        if right < len(self.data) and self.data[i] < self.data[right]:
+            largest = right
+
+        # if largest index is not the current node
+        if largest != i:
+            self.data[i], self.data[largest] = self.data[largest], self.data[i]
+            self.maxHeapify(largest)
